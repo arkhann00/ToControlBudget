@@ -22,9 +22,6 @@ final class NetworkManager {
     func fetchCurrency(completion: @escaping (Result<[String : Double], NetworkError>) -> Void){
         
         URLSession.shared.dataTask(with: Link.currency.url) { data, response, error in
-//            if let response = response as? HTTPURLResponse{
-//                print("response: \(response.statusCode)")
-//            }
             
             guard let data else {
                 print(error?.localizedDescription ?? "No error description")
