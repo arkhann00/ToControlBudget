@@ -244,6 +244,9 @@ extension ControlBudgetViewModel:ControlBudgetViewModelProtocolForSettings {
                 
                 budget *= coefficient
                 
+                userDefaults.set(currencyIndex, forKey: .numOfCurrency)
+                userDefaults.set(" " + currencySymbol, forKey: .currency)
+                
                 saveBudgetValue()
                 
             case .failure(let error):
