@@ -12,6 +12,9 @@ final class SettingsViewController: UIViewController {
     let currencySegmentedControl = CurrencySegmentedControl(items: ["₽","$","€","£"])
     let currencyTitleLabel = CurrencyTitleLabel()
     let settingsViewModel:SettingsViewModelProtocol = SettingsViewModel()
+    let updateMonthlyBudgetSwitch = UpdateMonthlyBudgetSwitch()
+    let monthlyBudgetTextField = MonthlyBudgetTextField()
+    
     //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,10 +47,20 @@ final class SettingsViewController: UIViewController {
         
         view.backgroundColor = Colors().dark2
         
+        let currentCurrencyLabel = UILabel()
+        currentCurrencyLabel.text = "Current currency"
+        currentCurrencyLabel.textColor = Colors().green
+        currentCurrencyLabel.font = currentCurrencyLabel.font.withSize(15)
+        view.addSubview(currentCurrencyLabel)
+        currentCurrencyLabel.snp.makeConstraints { make in
+            make.right.left.equalToSuperview().inset(30)
+            make.top.equalToSuperview().inset(120)
+        }
+        
         view.addSubview(currencyTitleLabel)
         
         currencyTitleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(100)
+            make.top.equalTo(currentCurrencyLabel).inset(10)
             make.right.left.equalToSuperview().inset(30)
         }
         
@@ -61,8 +74,41 @@ final class SettingsViewController: UIViewController {
         currencySegmentedControl.selectedSegmentIndex = lastSelect
         currencySegmentedControl.isSelected = true
         
+        let updateMothlyBudgetLabel = UILabel()
+        updateMothlyBudgetLabel.text = "Update monthly budget"
+        updateMothlyBudgetLabel.textColor = Colors().green
+        updateMothlyBudgetLabel.font = updateMothlyBudgetLabel.font.withSize(15)
+        view.addSubview(updateMothlyBudgetLabel)
+        updateMothlyBudgetLabel.snp.makeConstraints { make in
+            make.right.left.equalToSuperview().inset(30)
+            make.top.equalTo(currencySegmentedControl).inset(50)
+        }
         
         
+        view.addSubview(updateMonthlyBudgetSwitch)
+        updateMonthlyBudgetSwitch.onTintColor = Colors().green
+        updateMonthlyBudgetSwitch.snp.makeConstraints { make in
+                    make.top.equalTo(updateMothlyBudgetLabel).inset(25)
+                    make.right.equalToSuperview().inset(30)
+                }
+        updateMonthlyBudgetSwitch.isOn = settingsViewModel.fetchIsUpdateMonthlyBudget()
+        updateMonthlyBudgetSwitch.addTarget(self, action: #selector(changeStateMonthlyBudgetTextField), for: .valueChanged)
+        
+        view.addSubview(monthlyBudgetTextField)
+        monthlyBudgetTextField.snp.makeConstraints { make in
+            make.top.equalTo(updateMothlyBudgetLabel).inset(25)
+            make.left.equalToSuperview().inset(30)
+            make.height.equalTo(30)
+            make.width.equalTo(150)
+        }
+        monthlyBudgetTextField.isEnabled = updateMonthlyBudgetSwitch.isOn
+        monthlyBudgetTextField.text = settingsViewModel.fetchMonthlyBudgetForTextField()
+        
+        
+    }
+    
+    @objc func changeStateMonthlyBudgetTextField() {
+        monthlyBudgetTextField.isEnabled = updateMonthlyBudgetSwitch.isOn
     }
 
     
@@ -83,12 +129,27 @@ extension SettingsViewController {
             
             settingsViewModel.saveNewCurrency(currencyIndex: currencyIndex, currencyString: currencyString!)
             
+            guard settingsViewModel.saveMonthlyBudget(maybeNewMonthlyBudget: monthlyBudgetTextField.text ?? "", isUpdateMonthlyBudget: updateMonthlyBudgetSwitch.isOn) else {
+                showErrorAlertController()
+                return
+            }
             
         }))
         
         saveBarButtonItem.tintColor = Colors().green
         
         return saveBarButtonItem
+        
+    }
+    
+    private func showErrorAlertController(){
+        
+        let errorAlertcontroller = UIAlertController(title: "Invalid value", message: nil, preferredStyle: .alert)
+        let okAlertAction = UIAlertAction(title: "OK", style: .cancel)
+        
+        errorAlertcontroller.addAction(okAlertAction)
+        
+        present(errorAlertcontroller, animated: true)
         
     }
     

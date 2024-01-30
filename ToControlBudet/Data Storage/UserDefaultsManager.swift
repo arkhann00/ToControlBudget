@@ -17,6 +17,7 @@ protocol UserDefaultsManagerProtocol{
     func remove(forKey key: UserDefaultsManager.Keys)
     func bool(forKey key: UserDefaultsManager.Keys) -> Bool?
     func integer(forKey key: UserDefaultsManager.Keys) -> Int?
+    func date(forKey key: UserDefaultsManager.Keys) -> Date?
 }
 
 final class UserDefaultsManager{
@@ -27,10 +28,13 @@ final class UserDefaultsManager{
     
     public enum Keys: String {
         
-        case budget
-        case currency
-        case numOfCurrency
-        case coefficient
+        case budget // Оставшийся после затрат бюджет
+        case currency // Валюта
+        case numOfCurrency // Номер валюты в настройках
+        case coefficient // Коэфициент валюты
+        case isUpdateMonthlyBudget // Вкл / выкл обновление месячного бюджета
+        case monthlyBudget // Сумма обновления месячного бюджета 
+        case startDate // Дата с которой считается месячный бюджет
         
     }
     
@@ -72,6 +76,12 @@ extension UserDefaultsManager: UserDefaultsManagerProtocol {
     
     func integer(forKey key: Keys) -> Int? {
         restore(forKey: key.rawValue) as? Int
+    }
+    
+    func date(forKey key: Keys) -> Date? {
+        
+        restore(forKey: key.rawValue) as? Date
+        
     }
     
     func remove(forKey key: Keys){

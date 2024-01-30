@@ -27,6 +27,8 @@
 		50F702AC2B231961003E999F /* CostsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F702AB2B231961003E999F /* CostsTableView.swift */; };
 		50F702AE2B23196F003E999F /* BudgetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F702AD2B23196F003E999F /* BudgetLabel.swift */; };
 		50F702B02B2319B3003E999F /* CostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F702AF2B2319B3003E999F /* CostTableViewCell.swift */; };
+		FB2C794D2B681AAE006E1059 /* UpdateMonthlyBudgetSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2C794C2B681AAE006E1059 /* UpdateMonthlyBudgetSwitch.swift */; };
+		FB2C794F2B681B6F006E1059 /* MonthlyBudgetTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2C794E2B681B6F006E1059 /* MonthlyBudgetTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +53,8 @@
 		50F702AB2B231961003E999F /* CostsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CostsTableView.swift; sourceTree = "<group>"; };
 		50F702AD2B23196F003E999F /* BudgetLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetLabel.swift; sourceTree = "<group>"; };
 		50F702AF2B2319B3003E999F /* CostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CostTableViewCell.swift; sourceTree = "<group>"; };
+		FB2C794C2B681AAE006E1059 /* UpdateMonthlyBudgetSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateMonthlyBudgetSwitch.swift; sourceTree = "<group>"; };
+		FB2C794E2B681B6F006E1059 /* MonthlyBudgetTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyBudgetTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,7 +80,7 @@
 		50DE61DB2B34A30800B28BA5 /* SettingsViewController */ = {
 			isa = PBXGroup;
 			children = (
-				50DE61DE2B34A34D00B28BA5 /* Model */,
+				FB2C794B2B68198F006E1059 /* Model */,
 				50DE61DD2B34A34700B28BA5 /* View */,
 				50DE61DC2B34A33E00B28BA5 /* ViewModel */,
 			);
@@ -100,18 +104,13 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		50DE61DE2B34A34D00B28BA5 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		50DE61E32B34A39600B28BA5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				50DE61E42B34A3EA00B28BA5 /* CurrencySegmentedControl.swift */,
 				50DE61E62B34A40700B28BA5 /* CurrencyTitleLabel.swift */,
+				FB2C794C2B681AAE006E1059 /* UpdateMonthlyBudgetSwitch.swift */,
+				FB2C794E2B681B6F006E1059 /* MonthlyBudgetTextField.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -220,6 +219,13 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		FB2C794B2B68198F006E1059 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -303,6 +309,8 @@
 				50F7029F2B22FC64003E999F /* ControlBudgetViewController.swift in Sources */,
 				50DE61E92B34B3D300B28BA5 /* CurrencyConverter.swift in Sources */,
 				50F702A92B230B6C003E999F /* CoreDataModel.swift in Sources */,
+				FB2C794D2B681AAE006E1059 /* UpdateMonthlyBudgetSwitch.swift in Sources */,
+				FB2C794F2B681B6F006E1059 /* MonthlyBudgetTextField.swift in Sources */,
 				50F702802B22F6BB003E999F /* SceneDelegate.swift in Sources */,
 				50F702AC2B231961003E999F /* CostsTableView.swift in Sources */,
 				50F702AE2B23196F003E999F /* BudgetLabel.swift in Sources */,

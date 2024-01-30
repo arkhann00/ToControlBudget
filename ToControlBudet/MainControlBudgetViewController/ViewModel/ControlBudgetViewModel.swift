@@ -29,6 +29,7 @@ protocol ControlBudgetViewModelProtocol {
 //MARK: - Протокол модели для модели настроек
 protocol ControlBudgetViewModelProtocolForSettings {
     func convertCurrency(currencySymbol:String, currencyIndex:Int)
+    func changeMonthlyBudget(monthlyBudget value: Double)
 }
 
 //MARK: - Реализация основного протокола для контроллера
@@ -60,13 +61,33 @@ final class ControlBudgetViewModel: ControlBudgetViewModelProtocol {
     //MARK: - Извлечения сохраненной суммы бюджета из хранилища
     func fetchBudgetValue() -> String? {
         
-        guard let lastBudget = userDefaults.double(forKey: .budget) else { return "Non Value" }
+        let isUpdateMonthlyBudget = userDefaults.bool(forKey: .isUpdateMonthlyBudget) ?? false
+        let startDate = userDefaults.date(forKey: .startDate) ?? Calendar.current.startOfDay(for: Date.now)
         
-        budget = lastBudget
+        let diffMonths = Calendar.current.dateComponents([.month], from: startDate, to: Calendar.current.startOfDay(for: Date.now))
+        
+        if isUpdateMonthlyBudget && diffMonths.month! > 2 {
+            
+            let monthlyBudget = userDefaults.double(forKey: .monthlyBudget)
+            budget = monthlyBudget ?? 0
+            if let lastBudget = userDefaults.double(forKey: .budget) {
+                budget += lastBudget
+            }
+            
+            
+        } else {
+            
+            guard let lastBudget = userDefaults.double(forKey: .budget) else { return "Non Value" }
+            
+            budget = lastBudget
+            
+        }
+                
+        
         coefficient = userDefaults.double(forKey: .coefficient) ?? 1
         
         currencySign = userDefaults.string(forKey: .currency) ?? " ₽"
-        print(budget, coefficient, currencySign)
+        
         if round(budget) == budget {
             let strBudget = String(Int(budget))
             return strBudget + currencySign
@@ -212,6 +233,14 @@ final class ControlBudgetViewModel: ControlBudgetViewModelProtocol {
 }
 //MARK: - Расширение реализации протокола для модели настроек
 extension ControlBudgetViewModel:ControlBudgetViewModelProtocolForSettings {
+    
+    //MARK: - Измененение месячного бюджета
+    func changeMonthlyBudget(monthlyBudget value: Double) {
+        
+        budget = value
+        userDefaults.set(budget, forKey: .budget)
+    }
+    
     
     //MARK: - Конвертер из одной валюты в другую
     func convertCurrency(currencySymbol:String, currencyIndex:Int) {
